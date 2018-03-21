@@ -23,6 +23,7 @@ public class ShipInputManager : ManagedBehaviour {
 	private bool isDragging;
 	private bool startDragging;
 	private bool stopDragging;
+	public bool pointerUp;
 	public bool doubleTapped{ get; private set;}
 	public Vector2 inputPosition{ get; private set;}
 
@@ -57,7 +58,7 @@ public class ShipInputManager : ManagedBehaviour {
 
 	public override void ManagedUpdate () {
 		inputPosition = inputHandler.PointerPos ();
-		startDragging = stopDragging = doubleTapped = false;
+		startDragging = stopDragging = pointerUp = doubleTapped = false;
 
 		//set pointer-drag values:
 		if (!isDragging) {
@@ -68,6 +69,7 @@ public class ShipInputManager : ManagedBehaviour {
 		}
 		else {
 			if (inputHandler.PointerUp ()) {
+				pointerUp = true;
 				stopDragging = true;
 				isDragging = false;
 			}

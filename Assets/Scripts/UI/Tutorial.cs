@@ -12,17 +12,36 @@ public class Tutorial : MonoBehaviour {
 
 	void Awake(){
 		panel = GetComponent<CanvasGroup> ();
+		panel.Deactivate ();
 	}
 
 	void Start(){
-		Debug.Log ("build version: " + Application.version);
-		tutorialImages = GetComponentsInChildren<Image> ();
+		GameManager.instance.onGameStarted += ActivateTutorial;
+	}
+
+	void ActivateTutorial(){
+		Debug.Log ("activate tutorial!");
+		panel.Activate ();
+		tutorialImages = GetComponentsInChildren<Image> (true);
+		tutorialImages [0].gameObject.SetActive (true);
+	}
+
+	void Update(){
+		if (panel.alpha == 0)
+			return;
+
+		if (ShipInputManager.instance.pointerUp) {
+			Continue();
+		}
 	}
 
 	public void Continue(){
+		tutorialImages [tutorialCurrent].gameObject.SetActive (false);
 		tutorialCurrent++;
 		if (tutorialCurrent == tutorialViewCount) {
 			panel.Deactivate ();
+		} else {
+			tutorialImages [tutorialCurrent].gameObject.SetActive (true);
 		}
 	}
 }

@@ -34,6 +34,7 @@ public class GameManager : MonoBehaviour {
 
 	public Permit startPermit;
 
+	public event DefaultDelegate onGameStarted;
 	public event DefaultDelegate onBoatControlsDisabled;
 	public event DefaultDelegate onBoatControlsEnabled;
 
@@ -86,6 +87,9 @@ public class GameManager : MonoBehaviour {
 	public void StartGame(){
 		menuPanel.Deactivate ();
 		levelInfoScript.ShowLevelInfo (StartPlaying);
+		if (onGameStarted != null) {
+			onGameStarted ();
+		}
 	}
 
 	private void StartPlaying(){
