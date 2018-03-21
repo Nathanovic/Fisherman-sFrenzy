@@ -1,5 +1,7 @@
 ﻿using UnityEngine;
 
+public delegate void ShipBounceDelegate(float bounceFactor);
+
 public class ShipController : MonoBehaviour {
 
 	private ShipStats stats;
@@ -28,6 +30,7 @@ public class ShipController : MonoBehaviour {
 	public float maxStunDuration = 2f;
 	public float minBounceMagnitude = 3f;
 	public float maxBounceMagnitude = 10f;
+	public event ShipBounceDelegate onBounceOff;
 
 	//stats implementation:
 	private float maxForwardSpeed {
@@ -124,15 +127,22 @@ public class ShipController : MonoBehaviour {
 
 	void BounceOff(Vector3 bounceDir){
 		float magnitudeMultiplier = bounceDir.magnitude;
+		float bounceMagnitude = 0f;
 		if (magnitudeMultiplier < velocityThreshold)
 			return;
+		else {
+			remainingStunDuration = Mathf.Min (stunMultiplier * magnitudeMultiplier, maxStunDuration);
+			Vector3 bounceVel = bounceDir.normalized * bounceMultiplier * magnitudeMultiplier;
+			bounceMagnitude = Mathf.Clamp (bounceVel.magnitude, minBounceMagnitude, maxBounceMagnitude);
+			rb.velocity = bounceVel.normalized * bounceMagnitude;
 
-		remainingStunDuration = Mathf.Min (stunMultiplier * magnitudeMultiplier, maxStunDuration);;
-		Vector3 bounceVel = bounceDir.normalized * bounceMultiplier * magnitudeMultiplier;
-		float bounceMagnitude = Mathf.Clamp (bounceVel.magnitude, minBounceMagnitude, maxBounceMagnitude);
-		rb.velocity = bounceVel.normalized * bounceMagnitude;
+			currentSpeed = 0f;
+			currentRotateSpeed = 0f;
+		}
 
-		currentSpeed = 0f;
-		currentRotateSpeed = 0f;
+		float bounceFactor = bounceMagnitude / maxBounceMagnitude;
+		if (onBounceOff != null) {
+			onBounceOff (bounceFactor);
+		}
 	}
 }

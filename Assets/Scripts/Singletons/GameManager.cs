@@ -9,6 +9,7 @@ public class GameManager : MonoBehaviour {
 	public static GameManager instance;
 	public Transform sea;
 	public Text feedbackText;
+	private Counter disableFeedbackTextCounter;
 	private int currentLevel = 1;
 	[SerializeField]private int finalLevel = 2;
 
@@ -48,6 +49,8 @@ public class GameManager : MonoBehaviour {
 		endGameCounter.StartCounter (mainGameDurationInSecs);
 		endWarning = showBigTextDuration.ToString () + endWarning;
 		gameText.text = endWarning;
+		disableFeedbackTextCounter = new Counter (1f);
+		disableFeedbackTextCounter.onCount += DisableFeedback;
 
 		if (currentLevel == 1) {
 			gameLoopDependables.Sort ();
@@ -87,14 +90,14 @@ public class GameManager : MonoBehaviour {
 	public void StartGame(){
 		menuPanel.Deactivate ();
 		levelInfoScript.ShowLevelInfo (StartPlaying);
-		if (onGameStarted != null) {
-			onGameStarted ();
-		}
 	}
 
 	private void StartPlaying(){
 		Time.timeScale = 1f;
-		gameIsRunning = true;		
+		gameIsRunning = true;	
+		if (onGameStarted != null) {
+			onGameStarted ();
+		}	
 	}
 
 	void Update(){
@@ -116,8 +119,15 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void GameFeedback(string feedback, bool showAsWarning = false){
+		feedbackText.enabled = true;
 		feedbackText.text = feedback;
 		feedbackText.color = showAsWarning ? Color.red : Color.black;
+
+		disableFeedbackTextCounter.StartCounter ();
+	}
+
+	void DisableFeedback(){
+		feedbackText.enabled = false;
 	}
 
 	void ShowEndGameText(){

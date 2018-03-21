@@ -69,6 +69,7 @@ public class ShipInputManager : ManagedBehaviour {
 		}
 		else {
 			if (inputHandler.PointerUp ()) {
+				Debug.Log (" pointer up ");
 				pointerUp = true;
 				stopDragging = true;
 				isDragging = false;

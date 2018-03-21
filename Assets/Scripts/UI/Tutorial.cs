@@ -21,16 +21,20 @@ public class Tutorial : MonoBehaviour {
 
 	void ActivateTutorial(){
 		Debug.Log ("activate tutorial!");
+		GameManager.instance.DisableBoatControls ();
 		panel.Activate ();
 		tutorialImages = GetComponentsInChildren<Image> (true);
 		tutorialImages [0].gameObject.SetActive (true);
 	}
 
 	void Update(){
-		if (panel.alpha == 0)
+		if (panel.alpha == 0) {
+			Debug.Log (" panel deactivated");
 			return;
+		}
 
 		if (ShipInputManager.instance.pointerUp) {
+			Debug.Log (" continue");
 			Continue();
 		}
 	}
@@ -40,6 +44,7 @@ public class Tutorial : MonoBehaviour {
 		tutorialCurrent++;
 		if (tutorialCurrent == tutorialViewCount) {
 			panel.Deactivate ();
+			GameManager.instance.EnableBoatControls ();
 		} else {
 			tutorialImages [tutorialCurrent].gameObject.SetActive (true);
 		}
