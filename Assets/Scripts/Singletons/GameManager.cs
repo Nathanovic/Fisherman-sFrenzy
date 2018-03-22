@@ -35,7 +35,7 @@ public class GameManager : MonoBehaviour {
 
 	public Permit startPermit;
 
-	public event DefaultDelegate onGameStarted;
+	public event DefaultDelegate onTutorialReady;
 	public event DefaultDelegate onBoatControlsDisabled;
 	public event DefaultDelegate onBoatControlsEnabled;
 
@@ -74,10 +74,6 @@ public class GameManager : MonoBehaviour {
 		}
 	}
 
-	void AddPermit(){
-		
-	}
-
 	void OnEnvSceneLoaded(Scene newScene, LoadSceneMode loadMode){
 		SceneManager.SetActiveScene (newScene);		
 	}
@@ -86,18 +82,27 @@ public class GameManager : MonoBehaviour {
 	public void InitGameLoopDependable(ManagedBehaviour behaviour){
 		gameLoopDependables.Add (behaviour);
 	}
+	public void RemoveGameLoopDependable(ManagedBehaviour behaviour){
+		gameLoopDependables.Remove (behaviour);
+	}
 
 	public void StartGame(){
 		menuPanel.Deactivate ();
-		levelInfoScript.ShowLevelInfo (StartPlaying);
+		levelInfoScript.ShowLevelInfo (OnLevelInfoClickedAway);
 	}
 
-	private void StartPlaying(){
+	private void OnLevelInfoClickedAway(){
+		if (onTutorialReady != null) {//we spelen de tutorial:
+			onTutorialReady ();
+		} else {
+			StartPlaying ();
+		}
+	}
+
+	public void StartPlaying(){
+		Debug.Log ("start playing ");
 		Time.timeScale = 1f;
 		gameIsRunning = true;	
-		if (onGameStarted != null) {
-			onGameStarted ();
-		}	
 	}
 
 	void Update(){

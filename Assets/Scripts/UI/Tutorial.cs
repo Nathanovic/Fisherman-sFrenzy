@@ -10,43 +10,52 @@ public class Tutorial : MonoBehaviour {
 	private int tutorialCurrent = 0;
 	public int tutorialViewCount = 3;
 
+	private bool playTutorial;
+	private bool playDelayed;
+
 	void Awake(){
 		panel = GetComponent<CanvasGroup> ();
 		panel.Deactivate ();
 	}
 
 	void Start(){
-		GameManager.instance.onGameStarted += ActivateTutorial;
+		GameManager.instance.onTutorialReady += ActivateTutorial;
 	}
 
 	void ActivateTutorial(){
-		Debug.Log ("activate tutorial!");
-		GameManager.instance.DisableBoatControls ();
+		//make sure we can't view it twice:
+		playTutorial = true;
+		GameManager.instance.onTutorialReady -= ActivateTutorial;
 		panel.Activate ();
 		tutorialImages = GetComponentsInChildren<Image> (true);
 		tutorialImages [0].gameObject.SetActive (true);
 	}
 
-	void Update(){
-		if (panel.alpha == 0) {
-			Debug.Log (" panel deactivated");
+	void Update (){
+		if (playTutorial != playDelayed) {
+			playDelayed = playTutorial;
 			return;
 		}
 
-		if (ShipInputManager.instance.pointerUp) {
-			Debug.Log (" continue");
+		if (playTutorial && Input.GetMouseButtonUp(0)) {
 			Continue();
 		}
 	}
 
-	public void Continue(){
+	void Continue(){
 		tutorialImages [tutorialCurrent].gameObject.SetActive (false);
 		tutorialCurrent++;
 		if (tutorialCurrent == tutorialViewCount) {
-			panel.Deactivate ();
-			GameManager.instance.EnableBoatControls ();
+			FinishTutorial ();
 		} else {
 			tutorialImages [tutorialCurrent].gameObject.SetActive (true);
 		}
+	}
+
+
+	void FinishTutorial(){
+		GameManager.instance.StartPlaying ();
+		playTutorial = false;
+		panel.Deactivate ();		
 	}
 }

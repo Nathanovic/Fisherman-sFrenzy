@@ -33,8 +33,10 @@ public class Counter{
 
 	protected virtual void CountDown(){
 		if ((Time.time - startCountTime) >= countTime) {
-			onCount ();
 			startCountTime = Time.time; 
+			if (onCount != null) {
+				onCount ();			
+			}
 		}
 	}
 

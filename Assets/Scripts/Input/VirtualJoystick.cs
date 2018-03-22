@@ -26,8 +26,8 @@ public class VirtualJoystick : MonoBehaviour {
 		joystick = transform.GetChild (0).GetComponent<RectTransform> ();
 
 		cvg = GetComponent<CanvasGroup> ();
-		disableCounter = new CanvasCounter (cvg, cvgDisableTime, fadeOutTime);
-		disableCounter.onCount += DisableCVG;
+		disableCounter = new CanvasCounter (cvg, cvgDisableTime, fadeOutTime, 0.3f);
+		disableCounter.onCount += disableCounter.StopCounter;
 		//DisableCVG ();
 
 		//avoid the joystick from popping up when the boat should not be controlled
@@ -81,7 +81,11 @@ public class VirtualJoystick : MonoBehaviour {
 
 		RectTransformUtility.ScreenPointToLocalPointInRectangle (background, inputPos, null, out localPoint);
 		if(localPoint.magnitude <= maxInputTouchDist){
-			draggingJoystick = true; 
+			if (!draggingJoystick) {
+				draggingJoystick = true; 
+				disableCounter.StopCounter ();
+				cvg.alpha = 1f;
+			}
 			DragPointer ();
 		}
 	}
@@ -109,7 +113,7 @@ public class VirtualJoystick : MonoBehaviour {
 		inputVector = movementVector = Vector3.zero;
 		joystick.anchoredPosition = inputVector;
 		draggingJoystick = false;
-		//disableCounter.StartCounter ();
+		disableCounter.StartCounter ();
 	}
 
 	private void DisableCVG(){
