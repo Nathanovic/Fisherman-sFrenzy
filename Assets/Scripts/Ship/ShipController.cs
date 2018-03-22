@@ -9,6 +9,8 @@ public class ShipController : MonoBehaviour {
 	private Transform visual;
 	private Vector3 visualDefaultEuler;
 
+	public AudioSource motorAudio;
+
 	private float speedFactor = 1f;//[0 - 1]
 	[Range(0f, 1f)]public float netSpeedFactor = 0.6f;
 	private float currentSpeed;
@@ -103,6 +105,8 @@ public class ShipController : MonoBehaviour {
 		else {
 			currentSpeed = ResetValueOverTime (currentSpeed, maxForwardSpeed, speedDegenTime);
 		}
+
+		motorAudio.volume = currentSpeed / maxForwardSpeed;
 
 		//move:
 		rb.velocity = transform.forward * currentSpeed;

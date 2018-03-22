@@ -13,6 +13,8 @@ public class ProgressionManager : MonoBehaviour {
 	public PlayerEconomics scoreScript;
 	public int levelDemand = 50;
 
+	public event DefaultDelegate onGameOver;
+
 	void Awake(){
 		instance = this;
 	} 
@@ -51,6 +53,10 @@ public class ProgressionManager : MonoBehaviour {
 				playerCanContinue = false;
 				dockFeedback = "What?! You didn't even reach half our demand! \n" +
 				"You cannot continue like this!";
+
+				if (onGameOver != null) {
+					onGameOver ();
+				}
 			}
 		}
 
