@@ -12,11 +12,19 @@ public class PermitBound : MonoBehaviour {
 
 	public void OpenBound(){
 		if (state == PermitBoundState.Unlocked) {
-			state = PermitBoundState.Open;
-			GetComponent<Collider> ().enabled = false;
-			GetComponent<Renderer> ().enabled = false;
+			OpenSelf ();
 		} else {
 			state = PermitBoundState.Unlocked;
+		}
+	}
+
+	void OpenSelf(){
+		state = PermitBoundState.Open;
+		Transform[] children = transform.GetComponentsInChildren<Transform> ();
+		foreach (Transform child in children) {
+			if (child != transform) {
+				child.gameObject.SetActive (false);
+			}
 		}
 	}
 }

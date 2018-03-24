@@ -23,8 +23,12 @@ public class Sonar : MonoBehaviour {
 	}
 
 	private void Update () {
-		Vector3 movement = previousTargetPos - target.position;
-		map.position = map.position - movement;
+		Vector3 movement = target.position - previousTargetPos;
+		map.position = map.position + movement;
+
+		Vector3 targetPos = target.position;
+		targetPos.y = transform.position.y;
+		transform.position = targetPos;
 		rotator.transform.Rotate (Vector3.up * rotSpeed * Time.deltaTime, Space.World);
 
 		previousTargetPos = target.position;

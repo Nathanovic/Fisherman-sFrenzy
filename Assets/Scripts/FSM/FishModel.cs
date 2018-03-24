@@ -27,9 +27,9 @@ public class FishModel : MonoBehaviour {
 	}
 
 	public void Kill(){
-		Destroy (gameObject);
 		if (onKilled != null) {
 			onKilled ();
 		}
+		Destroy (gameObject);
 	}
 }

@@ -28,7 +28,8 @@ public class FishIndicator : MonoBehaviour {
 	}
 
 	void UpdatePosition(){
-		Vector3 targetPos = Sonar.instance.GetMinimapPosition (target.position);
+		Vector3 targetPos = target.position;//Sonar.instance.GetMinimapPosition (target.position);
+		targetPos.y = transform.position.y;
 		transform.position = targetPos;		
 	}
 
