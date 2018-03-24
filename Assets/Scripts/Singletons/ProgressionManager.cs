@@ -15,6 +15,8 @@ public class ProgressionManager : MonoBehaviour {
 
 	public event DefaultDelegate onGameOver;
 
+	public AudioClip gameLostSound;
+
 	void Awake(){
 		instance = this;
 	} 
@@ -57,6 +59,8 @@ public class ProgressionManager : MonoBehaviour {
 				if (onGameOver != null) {
 					onGameOver ();
 				}
+
+				AudioManager.instance.PlaySFX (gameLostSound);
 			}
 		}
 

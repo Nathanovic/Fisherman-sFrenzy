@@ -131,7 +131,7 @@ namespace UnityEngine.PostProcessing
                 else
                     UnityObject.DestroyImmediate(obj);
 #else
-                UnityObject.Destroy(obj);
+                UnityObject.Kill(obj);
 #endif
             }
         }

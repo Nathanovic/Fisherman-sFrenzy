@@ -8,6 +8,7 @@ public class FishModel : MonoBehaviour {
 	public FishConfig conf;
 	public event DefaultDelegate onCaught;
 	public event DefaultDelegate onEscaped;
+	public event DefaultDelegate onKilled;
 
 	public float defaultDistToTargetThreshold = 10f;
 	public float DistToTarget(){
@@ -23,5 +24,12 @@ public class FishModel : MonoBehaviour {
 
 	public void Escape(){
 		onEscaped ();
+	}
+
+	public void Kill(){
+		Destroy (gameObject);
+		if (onKilled != null) {
+			onKilled ();
+		}
 	}
 }

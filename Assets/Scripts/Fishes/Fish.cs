@@ -28,6 +28,8 @@ public class Fish : MonoBehaviour {
 
 	public string myStateQQQ;
 
+	public FishIndicator minimapIndicator;
+
 	public void Init(FishPool pool, FishConfig config){
 		myPool = pool;
 		conf = config;
@@ -37,6 +39,10 @@ public class Fish : MonoBehaviour {
 
 		position = transform.position;
 		velocity = new Vector3(RandomVal(0.1f), RandomVal(0.05f), RandomVal(0.1f));
+
+		Transform minimap = Sonar.instance.GetMinimapTransform ();
+		minimapIndicator = GameObject.Instantiate (minimapIndicator, minimapIndicator.transform.position, Quaternion.identity, minimap) as FishIndicator;
+		minimapIndicator.Init (myData);
 	}
 
 	void Update(){
@@ -119,6 +125,7 @@ public class Fish : MonoBehaviour {
 
 	public Vector3 GoalSteering(){
 		Vector3 vec = transform.parent.position - transform.position;
+		Debug.DrawRay (transform.position, vec);
 		return vec.normalized * conf.seekTargetPriority;
 	}
 

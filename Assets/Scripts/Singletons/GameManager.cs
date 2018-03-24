@@ -35,9 +35,12 @@ public class GameManager : MonoBehaviour {
 
 	public Permit startPermit;
 
+	public event DefaultDelegate onGameStarted;
 	public event DefaultDelegate onTutorialReady;
 	public event DefaultDelegate onBoatControlsDisabled;
 	public event DefaultDelegate onBoatControlsEnabled;
+
+	public AudioClip gameStartSound;
 
 	void Awake(){
 		instance = this;
@@ -100,9 +103,13 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void StartPlaying(){
-		Debug.Log ("start playing ");
+		if (onGameStarted != null) {
+			onGameStarted ();
+		}
+
 		Time.timeScale = 1f;
 		gameIsRunning = true;	
+		AudioManager.instance.PlaySFX (gameStartSound);
 	}
 
 	void Update(){

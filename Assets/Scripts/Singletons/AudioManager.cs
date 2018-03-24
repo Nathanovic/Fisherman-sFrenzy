@@ -8,9 +8,11 @@ public class AudioManager : MonoBehaviour {
 	public AudioSource sfxSource;
 	public AudioSource musicSource;
 
-	public AudioSource cheerfulMusic;
-	public AudioSource neutralMusic;
-	public AudioSource sadMusic;
+	public float fadeDuration = 0.5f;
+	public AudioClip cheerfulMusic;
+	public AudioClip neutralMusic;
+	public AudioClip sadMusic;
+	private AudioClip currentMusic;
 
 	private bool gameRunning = true;
 
@@ -20,11 +22,20 @@ public class AudioManager : MonoBehaviour {
 
 	void Start(){
 		ProgressionManager.instance.onGameOver += FadeToSadMusic;
+		GameManager.instance.onGameStarted += OnGameStarted;
+		currentMusic = cheerfulMusic;
+		StartCoroutine (PlayMainMusic ());
 	}
 
 	IEnumerator PlayMainMusic(){
 		while (gameRunning) {
-			//wissel tussen 2 clips
+			//wissel tussen 2 clips:
+			yield return new WaitUntil (() => !musicSource.isPlaying);
+			if (gameRunning) {
+				currentMusic = currentMusic == cheerfulMusic ? neutralMusic : cheerfulMusic;
+				musicSource.clip = currentMusic;
+				musicSource.Play ();
+			}
 		}	
 	}
 
@@ -33,9 +44,17 @@ public class AudioManager : MonoBehaviour {
 	}
 
 	void FadeToSadMusic(){
-		Debug.Log ("fade to sad music!");
 		gameRunning = false;
-		StartCoroutine (FadeMusic (sadMusic, 0.5f));
+		musicSource.loop = true;
+		StartCoroutine (FadeMusic (sadMusic, fadeDuration));
+	}
+
+	void OnGameStarted(){
+		if (!gameRunning) {
+			gameRunning = true;
+			musicSource.loop = false;
+			StartCoroutine (FadeMusic (cheerfulMusic, fadeDuration));
+		}
 	}
 
 	IEnumerator FadeMusic(AudioClip nextClip, float fadeDuration){

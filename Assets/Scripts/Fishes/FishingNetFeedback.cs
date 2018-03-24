@@ -12,6 +12,7 @@ public class FishingNetFeedback : MonoBehaviour {
 	[SerializeField]private AudioClip netDownSound;
 	[SerializeField]private AudioClip netBrokenSound;
 	[SerializeField]private AudioClip fishUpSound;
+	[SerializeField]private AudioClip fishCaughtSound;
 	[SerializeField]private float fishUpSoundDelay = 1.5f;
 
 	void Start () { 
@@ -22,6 +23,7 @@ public class FishingNetFeedback : MonoBehaviour {
 
 		fishNetScript.onNetUp += FishUpFeedback;
 		fishNetScript.onNetBroken += NetBrokenFeedback;
+		fishNetScript.onFishCaught += FishCaughtFeedback;
 	}
 
 	void NetDownFeedback(){
@@ -54,5 +56,9 @@ public class FishingNetFeedback : MonoBehaviour {
 	void NetBrokenFeedback(){
 		GameManager.instance.GameFeedback ("All of your fishes escape!", true);
 		AudioManager.instance.PlaySFX (netBrokenSound);
+	}
+
+	void FishCaughtFeedback(){
+		AudioManager.instance.PlaySFX (fishCaughtSound);		
 	}
 }

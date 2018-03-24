@@ -11,12 +11,4 @@ public class NetSnapVignette : VignetteVFX {
 	void EnableNetBrokenVFX(){
 		StartCoroutine (FadeVignette (1f));
 	}
-
-	public bool check;
-	void Update(){
-		if (check) {
-			check = false;
-			EnableNetBrokenVFX ();
-		}
-	}
 }

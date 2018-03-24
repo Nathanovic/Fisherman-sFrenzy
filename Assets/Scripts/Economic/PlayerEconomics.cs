@@ -5,6 +5,10 @@ public class PlayerEconomics : MonoBehaviour {
 
 	private ShipStats statScript;
 	public IntValueHolder fishValueHolder;
+	public Image storageFill;
+	public Text storageText;
+	private Color defaultColor;
+	public Color warningColor;
 
 	void Awake(){
 		fishValueHolder = new IntValueHolder ();		
@@ -15,6 +19,8 @@ public class PlayerEconomics : MonoBehaviour {
 		FishingNet fishingScript = GetComponentInChildren<FishingNet> ();
 
 		fishingScript.onNetUp += AddFish;
+		defaultColor = storageText.color;
+		UpdateStorageFillness ();
 	}
 
 	void Update(){
@@ -23,8 +29,14 @@ public class PlayerEconomics : MonoBehaviour {
 		}
 	}
 
+	public int LimitedStorageFishCount(int count){
+		int fullStorageDiff = statScript.storageSize - fishValueHolder.GetValue ();
+		return Mathf.Min (count, fullStorageDiff);
+	}
+
 	private void AddFish(int count){
 		fishValueHolder.AddValue(count);
+		UpdateStorageFillness ();
 	}
 
 	public void TryUpgrade(Upgrade upgrade, out bool succes){
@@ -55,10 +67,17 @@ public class PlayerEconomics : MonoBehaviour {
 
 	void UseFishForUpgrade(int fish){
 		fishValueHolder.AddValue (-fish);
+		UpdateStorageFillness ();
 	}
 
 	public bool SufficientFishCount(int requiredCount){
 		return fishValueHolder.GetValue() >= requiredCount;
+	}
+
+	void UpdateStorageFillness(){
+		float fillAmount = fishValueHolder.GetValue () / statScript.storageSize;
+		storageFill.fillAmount = fillAmount;
+		storageText.color = fillAmount == 1f ? warningColor : defaultColor;
 	}
 
 	public class IntValueHolder{

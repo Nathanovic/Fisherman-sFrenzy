@@ -132,9 +132,7 @@ public class ShipController : MonoBehaviour {
 	void BounceOff(Vector3 bounceDir){
 		float magnitudeMultiplier = bounceDir.magnitude;
 		float bounceMagnitude = 0f;
-		if (magnitudeMultiplier < velocityThreshold)
-			return;
-		else {
+		if (magnitudeMultiplier >= velocityThreshold) {
 			remainingStunDuration = Mathf.Min (stunMultiplier * magnitudeMultiplier, maxStunDuration);
 			Vector3 bounceVel = bounceDir.normalized * bounceMultiplier * magnitudeMultiplier;
 			bounceMagnitude = Mathf.Clamp (bounceVel.magnitude, minBounceMagnitude, maxBounceMagnitude);

@@ -432,8 +432,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8bd9f248e35f8a74c8be6766b440c90b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  position: {x: 0, y: 0, z: 0}
   velocity: {x: 0, y: 0, z: 0}
+  speedFactor: 0
+  myStateQQQ: 
+  minimapIndicator: {fileID: 114520871867025464, guid: 334ed51b23ea3d04ba8857e34514841c,
+    type: 2}
 --- !u!114 &114426914996823380
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -445,6 +448,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 328b04b29dfd5524cb290ffcf03fb4ce, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  position: {x: 0, y: 0, z: 0}
+  conf: {fileID: 0}
+  defaultDistToTargetThreshold: 10
+  net: {fileID: 0}
 --- !u!137 &137873760396494780
 SkinnedMeshRenderer:
   m_ObjectHideFlags: 1
