@@ -50,8 +50,7 @@ public class GameManager : MonoBehaviour {
 		endGameCounter = new Counter ();
 		endGameCounter.onCount += ShowEndGameText;
 		endGameCounter.StartCounter (mainGameDurationInSecs);
-		endWarning = showBigTextDuration.ToString () + endWarning;
-		gameText.text = endWarning;
+		gameText.text = showBigTextDuration.ToString () + endWarning;
 		disableFeedbackTextCounter = new Counter (1f);
 		disableFeedbackTextCounter.onCount += DisableFeedback;
 

@@ -8,6 +8,7 @@ TagManager:
   - Dock
   - Obstacle
   - Sonar
+  - FishPool
   layers:
   - Default
   - TransparentFX

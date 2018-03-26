@@ -6,6 +6,7 @@ public class CanvasCounter : Counter {
 	private float fadeTime;
 	private float startFadeTime;
 	private float targetA;
+	private float startA;
 
 	public CanvasCounter(CanvasGroup _target, float _countTime, float _fadeTime, float _targetA){
 		target = _target;
@@ -16,13 +17,22 @@ public class CanvasCounter : Counter {
 		CountManager.instance.InitCounter (this);
 	}
 
+	public override void StartCounter (){
+		startA = target.alpha;
+		base.StartCounter ();
+	}
+
 	protected override void CountDown () {
 		float timeDiff = Time.time - startCountTime;
 		float remainValue = timeDiff - startFadeTime;
 		if (remainValue > 0f) {
-			target.alpha = Mathf.Lerp (1f, targetA, remainValue / fadeTime);
+			target.alpha = Mathf.Lerp (startA, targetA, remainValue / fadeTime);
 		}
 
 		base.CountDown ();
+	}
+
+	public void SetTargetA(float _targetA){
+		targetA = _targetA;
 	}
 }
