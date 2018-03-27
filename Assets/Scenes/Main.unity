@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0.45012462, g: 0.5001667, b: 0.5754502, a: 1}
+  m_IndirectSpecularColor: {r: 0.45012468, g: 0.5001672, b: 0.5754506, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -9991,8 +9991,8 @@ SkinnedMeshRenderer:
   m_BlendShapeWeights: []
   m_RootBone: {fileID: 0}
   m_AABB:
-    m_Center: {x: 0, y: -0.0000000037252903, z: 0}
-    m_Extent: {x: 0.004998212, y: 0.004999999, z: 0.00499999}
+    m_Center: {x: 0, y: -0.0000000037252903, z: 0.000000029802322}
+    m_Extent: {x: 0.004998212, y: 0.004999999, z: 0.0049999896}
   m_DirtyAABB: 0
 --- !u!183 &860106940
 Cloth:
@@ -12861,7 +12861,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 85d843ce46c59834bb1c04e1e9150447, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  sailSpeed: 9
+  sailSpeed: 11
   rotationSpeed: 8.2
   storageSize: 25
   netSize: 10
@@ -13909,7 +13909,7 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 1009256955}
   m_HandleRect: {fileID: 1009256954}
   m_Direction: 0
-  m_Value: 0
+  m_Value: 0.000000103554726
   m_Size: 0.65388453
   m_NumberOfSteps: 0
   m_OnValueChanged:
@@ -19319,6 +19319,26 @@ Prefab:
     - target: {fileID: 1658426205207512, guid: 467782f68e1654b4d945a51bca75f3e2, type: 2}
       propertyPath: m_Name
       value: FishFeedback
+      objectReference: {fileID: 0}
+    - target: {fileID: 198123328582506950, guid: 467782f68e1654b4d945a51bca75f3e2,
+        type: 2}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minScalar
+      value: 30.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198123328582506950, guid: 467782f68e1654b4d945a51bca75f3e2,
+        type: 2}
+      propertyPath: EmissionModule.m_Bursts.Array.data[1].countCurve.minScalar
+      value: 30.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198123328582506950, guid: 467782f68e1654b4d945a51bca75f3e2,
+        type: 2}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minScalar
+      value: 30.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198123328582506950, guid: 467782f68e1654b4d945a51bca75f3e2,
+        type: 2}
+      propertyPath: EmissionModule.m_Bursts.Array.data[1].countCurve.minScalar
+      value: 30.0000
       objectReference: {fileID: 0}
     - target: {fileID: 198123328582506950, guid: 467782f68e1654b4d945a51bca75f3e2,
         type: 2}
