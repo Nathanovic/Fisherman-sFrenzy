@@ -38,6 +38,8 @@ public class DockStore : MonoBehaviour {
 
 	private void Start () {	
 		interactionScript.onDockEntered += EnterDock;
+
+		UpdateSelectedPermitInfo (selectedPermit);
 		GoToUpgradePanel ();
 		tradePanel.Deactivate ();
 	}
