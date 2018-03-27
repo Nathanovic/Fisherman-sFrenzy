@@ -4,6 +4,7 @@ using UnityEngine;
 //handles the spawning of fish for this specific fish pool
 public class FishPool : MonoBehaviour {
 
+	public string permitName;
 	private FishConfig config;
 
 	private Counter fishInMeCounter;
@@ -36,7 +37,8 @@ public class FishPool : MonoBehaviour {
 		config = transform.root.GetComponent<FishConfig> ();
 	}
 
-	public void StartSpawning () {
+	public void StartSpawning (string _permitName) {
+		permitName = _permitName;
 		TrySetup ();
 
 		myFishes = new List<Fish> (fishCount * 2);

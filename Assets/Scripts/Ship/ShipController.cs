@@ -147,4 +147,18 @@ public class ShipController : MonoBehaviour {
 			onBounceOff (bounceFactor);
 		}
 	}
+
+	public void EnterPort(Transform portOrigin){
+		Vector3 targetPos = portOrigin.position;
+		targetPos.y = transform.position.y;
+		transform.position = targetPos;
+
+		transform.rotation = portOrigin.rotation;
+
+		rb.velocity = Vector3.zero;
+		rb.angularVelocity = Vector3.zero;
+
+		currentSpeed = 0f;
+		currentRotateSpeed = 0f;
+	}
 }

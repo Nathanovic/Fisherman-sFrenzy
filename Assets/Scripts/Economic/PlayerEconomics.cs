@@ -51,10 +51,18 @@ public class PlayerEconomics : MonoBehaviour {
 			if (upgrade.stat != ShipUpgradeable.permit) {
 				statScript.UpgradeStat (upgrade);
 			}
-			else {
-				BuyPermit (upgrade.linkedPermit);
-			}
 
+			succes = true;
+		}
+		else {
+			succes = false;
+		}
+	}
+
+	public void TryBuyPermit(Permit permit, out bool succes){
+		if (SufficientFishCount (permit.cost)) {
+			UseFishForUpgrade (permit.cost);
+			BuyPermit (permit);
 			succes = true;
 		}
 		else {

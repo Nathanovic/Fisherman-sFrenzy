@@ -5,13 +5,15 @@
 //if the permit is unlocked, beginnen we met spawnen
 public class Permit : MonoBehaviour {
 
+	public new string name = "Safe waters";
+	public int cost = 40;
+
 	public bool unlocked;
-	public int unlockPrice = 40;
 	[SerializeField]private PermitBound[] bounds;
 
 	[HideInInspector]public FishPool[] myFishPools;
 
-	void Start(){
+	void Awake(){
 		//make sure we enable the stuff we have to, if we're already unlocked at the beginning of the game:
 		if (unlocked) {
 			Unlock ();
@@ -37,7 +39,7 @@ public class Permit : MonoBehaviour {
 
 		myFishPools = GetComponentsInChildren<FishPool> ();
 		for (int i = 0; i < myFishPools.Length; i++) {
-			myFishPools [i].StartSpawning ();
+			myFishPools [i].StartSpawning (name);
 		}	
 	}
 

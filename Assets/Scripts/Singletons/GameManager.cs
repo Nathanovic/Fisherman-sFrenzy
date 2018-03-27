@@ -7,10 +7,10 @@ using UnityEngine.SceneManagement;
 public class GameManager : MonoBehaviour {
 	
 	public static GameManager instance;
+	public DockStore dockScript;
 	public Transform sea;
 	public Text feedbackText;
 	private Counter disableFeedbackTextCounter;
-	private int currentLevel = 1;
 	[SerializeField]private int finalLevel = 2;
 
 	public Text gameText;
@@ -42,6 +42,8 @@ public class GameManager : MonoBehaviour {
 
 	public AudioClip gameStartSound;
 
+	private bool gameStarted;//used for initialization
+
 	void Awake(){
 		instance = this;
 	}
@@ -54,7 +56,8 @@ public class GameManager : MonoBehaviour {
 		disableFeedbackTextCounter = new Counter (1f);
 		disableFeedbackTextCounter.onCount += DisableFeedback;
 
-		if (currentLevel == 1) {
+		if (!gameStarted) {
+			gameStarted = true;
 			gameLoopDependables.Sort ();
 
 			ProgressionManager.instance.AddPermit (startPermit);
@@ -164,25 +167,43 @@ public class GameManager : MonoBehaviour {
 			t -= Time.deltaTime;
 		}
 
-		gameText.enabled = false; 
-		gameIsRunning = false;
 		ProgressionManager.instance.EvaluateProgress ();
-	}
-
-	public void LoadNextLevel(){
-		currentLevel++;
-		gameText.enabled = true;
-
-		if (currentLevel > finalLevel) {
-			gameText.text = "You completed the game!";
-			gameIsRunning = false;
+		if (ProgressionManager.instance.playerCanContinue) {
+			dockScript.EnterDock ();
+			dockScript.onDockLeft += OnDockLeft;
 		}
 		else {
-			gameText.text = "Level " + currentLevel.ToString() + " begins!";
-			endGameCounter.onCount += DisableGameText;
-			endGameCounter.StartCounter (3f);
-			Start ();
+			OnSeasonEnded ();
 		}
+	}
+
+	void OnDockLeft(){
+		dockScript.onDockLeft -= OnDockLeft;	
+		OnSeasonEnded ();
+	}
+
+	void OnSeasonEnded(){
+		DisableBoatControls ();
+		gameText.enabled = false; 
+		gameIsRunning = false;
+		ProgressionManager.instance.ShowResults ();
+	}
+
+	public void StartNextSeason(int season){
+		gameText.enabled = true;
+
+		gameText.text = "Season " + season.ToString() + " begins!";
+		endGameCounter.onCount += DisableGameText;
+		endGameCounter.StartCounter (3f);
+		EnableBoatControls ();
+		Start ();
+	}
+
+	public void ShowGameCompletion(){
+		gameText.enabled = true;
+
+		gameText.text = "You completed the game!";
+		gameIsRunning = false;
 	}
 
 	void DisableGameText(){
