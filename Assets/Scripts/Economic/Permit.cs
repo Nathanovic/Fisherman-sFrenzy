@@ -11,6 +11,13 @@ public class Permit : MonoBehaviour {
 
 	[HideInInspector]public FishPool[] myFishPools;
 
+	void Start(){
+		//make sure we enable the stuff we have to, if we're already unlocked at the beginning of the game:
+		if (unlocked) {
+			Unlock ();
+		}
+	}
+
 	//if one adjacent permitBound is open, the player can buy it
 	public bool CanBuyPermit(){
 		for (int i = 0; i < bounds.Length; i++) {

@@ -4,6 +4,7 @@ using UnityEngine.UI;
 public class PlayerEconomics : MonoBehaviour {
 
 	private ShipStats statScript;
+	public IntValueHolder totalValueHolder;
 	public IntValueHolder fishValueHolder;
 	public Image storageFill;
 	public Text storageText;
@@ -11,6 +12,7 @@ public class PlayerEconomics : MonoBehaviour {
 	public Color warningColor;
 
 	void Awake(){
+		totalValueHolder = new IntValueHolder ();
 		fishValueHolder = new IntValueHolder ();		
 	}
 
@@ -35,6 +37,7 @@ public class PlayerEconomics : MonoBehaviour {
 	}
 
 	private void AddFish(int count){
+		totalValueHolder.AddValue (count);
 		fishValueHolder.AddValue(count);
 		UpdateStorageFillness ();
 	}
@@ -72,6 +75,10 @@ public class PlayerEconomics : MonoBehaviour {
 
 	public bool SufficientFishCount(int requiredCount){
 		return fishValueHolder.GetValue() >= requiredCount;
+	}
+
+	public bool SufficientScoreCount(int requiredCount){
+		return totalValueHolder.GetValue () >= requiredCount;
 	}
 
 	void UpdateStorageFillness(){

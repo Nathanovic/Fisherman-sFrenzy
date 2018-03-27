@@ -48,7 +48,7 @@ public class ProgressionManager : MonoBehaviour {
 			"You will destroy the entire population!";
 		} else {
 			int requiredCount = Mathf.FloorToInt ((float)levelDemand / 2f);
-			if (scoreScript.SufficientFishCount(requiredCount)) {
+			if (scoreScript.SufficientScoreCount(requiredCount)) {
 				playerCanContinue = true;
 				dockFeedback = "Okay, you've just got enough, you can continue if you want";
 			} else {

@@ -33,16 +33,16 @@ public class FishPool : MonoBehaviour {
 		if (setupFinished)
 			return;
 		setupFinished = true;
-
 		config = transform.root.GetComponent<FishConfig> ();
-		myFishes = new List<Fish> (fishCount * 2);
-		for (int i = 0; i < fishCount; i++) {
-			SpawnFish ();
-		}	
 	}
 
 	public void StartSpawning () {
 		TrySetup ();
+
+		myFishes = new List<Fish> (fishCount * 2);
+		for (int i = 0; i < fishCount; i++) {
+			SpawnFish ();
+		}	
 
 		fishInMeCounter = new Counter ();
 		fishInMeCounter.onCount += BoostRespawnRate;
