@@ -78,7 +78,6 @@ public class ShipInputManager : ManagedBehaviour {
 		//check for double tap:
 		if (inputHandler.PointerUp ()) {
 			float tapMoment = Time.time;	
-
 			if ((tapMoment - previousTabMoment) <= doubleTabTime) {
 				doubleTapped = true;
 				previousTabMoment = -1f;//prevent two double taps in three finger-taps

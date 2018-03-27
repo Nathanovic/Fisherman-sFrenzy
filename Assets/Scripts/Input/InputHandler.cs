@@ -48,8 +48,8 @@ public class MouseInputHandler : InputHandler{
 public class TouchInputHandler : InputHandler{
 
 	public override bool PointerDown (){
-		for(int i = 0; i < Input.touchCount; i ++){
-			Touch currentTouch = Input.GetTouch(i);
+		if (Input.touches.Length > 0) {
+			Touch currentTouch = Input.GetTouch(0);
 			if (currentTouch.phase == TouchPhase.Began && !PointerInNoJoyElement (currentTouch.position)) {
 				return true;
 			}
@@ -58,19 +58,16 @@ public class TouchInputHandler : InputHandler{
 		return false;
 	}
 	public override bool PointerUp (){
-		for(int i = 0; i < Input.touchCount; i ++){
-			if (Input.GetTouch (i).phase != TouchPhase.Ended) {
-				return false;
+		if (Input.touches.Length > 0) {
+			Touch currentTouch = Input.GetTouch(0);
+			if (currentTouch.phase == TouchPhase.Ended) {
+				return true;
 			}
 		}
 
-		if (Input.touchCount == 0) {
-			return false;
-		}
-
-		return true;
+		return false;
 	}
 	public override Vector2 PointerPos (){
-		return Input.touches[0].position;
+		return Input.touchCount > 0 ? Input.touches[0].position : Vector2.zero;
 	}
 }

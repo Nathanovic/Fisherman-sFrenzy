@@ -20,7 +20,7 @@ public class Counter{
 		countTime = _countTime;
 		StartCounter ();
 	}
-	public void StartCounter(){
+	public virtual void StartCounter(){
 		count = true;
 		startCountTime = Time.time; 	
 	}
