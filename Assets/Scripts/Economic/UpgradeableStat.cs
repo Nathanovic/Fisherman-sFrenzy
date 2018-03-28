@@ -16,6 +16,12 @@ public class UpgradeableStat : MonoBehaviour {
 		for (int i = 0; i < upgrades.Length; i++) {
 			upgrades [i].stat = stat;
 		}
+
+		if (stat == ShipUpgradeable.permit) {
+			for (int i = 0; i < upgrades.Length; i++) {
+				upgrades [i].SetPermitName ();
+			}
+		}
 	}
 
 	public Upgrade CurrentUpgrade(){
@@ -61,5 +67,10 @@ public class Upgrade {
 
 	public string BenefitText(){
 		return "This upgrade will grant you " + upgradeValue.ToString () + " extra " + stat.ToString () + "!"; 
+	}
+
+	public void SetPermitName(){
+		Debug.Log ("set permit name");
+		linkedPermit.name = upgradeTitle;
 	}
 }

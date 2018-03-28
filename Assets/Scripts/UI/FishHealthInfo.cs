@@ -1,8 +1,8 @@
 ﻿using UnityEngine.UI;
 using UnityEngine;
 
-//this script shows the fishHealth info to the player
-//thiss is done by subscribing functionality to the ShipInteractions events
+//this script shows the fishHealth
+//thiss is done by subscribing functionality to the ShipInteractions events so that it is only visible if the player is close
 public class FishHealthInfo : MonoBehaviour {
 
 	private Transform camTransform;
@@ -15,9 +15,9 @@ public class FishHealthInfo : MonoBehaviour {
 	public float yOffset = 3f;
 
 	[Range(0f,1f)]public float dangerHealthPercentage = 0.5f;
+	public Color safeHealthColor;
 	public Color dangerHealthColor;
 	public Color noRepopHealthColor;
-	public Color exterminatedHealthColor;
 
 	void Start () {
 		camTransform = Camera.main.transform;
@@ -61,15 +61,14 @@ public class FishHealthInfo : MonoBehaviour {
 	}
 
 	void SetHealthColor(){
-		Color healthColor = Color.green;
+		Color healthColor = safeHealthColor;
 		int fishCount = poolScript.RemainingFishCount ();
 		float healthPercent = (float)fishCount / poolScript.maxFishAmount;
-		if (healthPercent < dangerHealthPercentage && fishCount >= poolScript.minFishAmount)
-			healthColor = dangerHealthColor;
-		else if (fishCount < poolScript.minFishAmount && fishCount > 0)
+
+		if (fishCount < poolScript.minFishAmount)
 			healthColor = noRepopHealthColor;
-		else if (fishCount == 0)
-			healthColor = exterminatedHealthColor;		
+		else if (ProgressionManager.instance.FishPoolEndangered(poolScript))
+			healthColor = dangerHealthColor;
 
 		image.color = healthColor;
 	}
