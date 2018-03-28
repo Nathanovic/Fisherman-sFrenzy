@@ -20,6 +20,7 @@ public class FishPool : MonoBehaviour {
 	public int fishCount;
 	public float poolRadius;
 
+	public FishSpecie specie;
 	public string fishName = "fish";
 	public int maxFishAmount = 20;
 	public int minFishAmount = 2;
@@ -114,4 +115,10 @@ public class FishPool : MonoBehaviour {
 	public int RemainingFishCount(){
 		return myFishes.Count;
 	}
+}
+
+public enum FishSpecie{
+	Anchovies,
+	Tuna,
+	Trout
 }

@@ -8,7 +8,11 @@ public class Fish : MonoBehaviour {
 
 	private FishModel myData;
 
-	private FishPool myPool;
+	private FishPool myPool {
+		get {
+			return myData.myPool;
+		}
+	}
 	private FishConfig conf;
 
 	private Vector3 acceleration;
@@ -31,10 +35,10 @@ public class Fish : MonoBehaviour {
 	public FishIndicator minimapIndicator;
 
 	public void Init(FishPool pool, FishConfig config){
-		myPool = pool;
 		conf = config;
 		myData = GetComponent<FishModel> ();
 		myData.conf = conf;
+		myData.Init (pool);
 		fsm = new FiniteStateMachine (this, myData);
 
 		position = transform.position;
@@ -153,6 +157,7 @@ public class Fish : MonoBehaviour {
 		myPool.FishCaught (this);
 	}
 
+	//make sure we swim again to the center of a fishpool
 	public void EscapeFromNet(){
 		Vector3 newPos = myData.net.position + Random.insideUnitSphere;
 		newPos.y = Random.Range (-conf.checkBoundsRadius * 2, -conf.checkBoundsRadius);
@@ -161,7 +166,7 @@ public class Fish : MonoBehaviour {
 		Renderer[] visuals = GetComponentsInChildren<Renderer> ();
 		for (int i = 0; i < visuals.Length; i++) {
 			visuals [i].enabled = true;
-		}		
+		}	
 
 		myPool.FishEscaped (this);
 	}

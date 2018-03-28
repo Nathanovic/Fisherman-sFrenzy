@@ -13627,7 +13627,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 18
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &692657867
 Transform:
   m_ObjectHideFlags: 0
@@ -14879,6 +14879,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   fishesInNet: []
   fillRect: {fileID: 0}
+  currentFishPool: {fileID: 0}
   myState: 2
   maxCatchFishInterval: 0.5
 --- !u!23 &742386696
