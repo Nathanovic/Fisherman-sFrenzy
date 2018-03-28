@@ -11,7 +11,6 @@ public class GameManager : MonoBehaviour {
 	public Transform sea;
 	public Text feedbackText;
 	private Counter disableFeedbackTextCounter;
-	[SerializeField]private int finalLevel = 2;
 
 	public Text gameText;
 	[SerializeField]private string endWarning = " seconds left! Speed it up!";
@@ -35,14 +34,12 @@ public class GameManager : MonoBehaviour {
 
 	public Permit startPermit;
 
-	public event DefaultDelegate onGameStarted;
+	public event DefaultDelegate onSeasonStarted;
 	public event DefaultDelegate onTutorialReady;
 	public event DefaultDelegate onBoatControlsDisabled;
 	public event DefaultDelegate onBoatControlsEnabled;
 
 	public AudioClip gameStartSound;
-
-	private bool gameStarted;//used for initialization
 
 	void Awake(){
 		instance = this;
@@ -50,29 +47,20 @@ public class GameManager : MonoBehaviour {
 
 	void Start(){
 		endGameCounter = new Counter ();
-		endGameCounter.onCount += ShowEndGameText;
-		endGameCounter.StartCounter (mainGameDurationInSecs);
-		gameText.text = showBigTextDuration.ToString () + endWarning;
 		disableFeedbackTextCounter = new Counter (1f);
 		disableFeedbackTextCounter.onCount += DisableFeedback;
 
-		if (!gameStarted) {
-			gameStarted = true;
-			gameLoopDependables.Sort ();
+		gameLoopDependables.Sort ();
 
-			ProgressionManager.instance.AddPermit (startPermit);
+		ProgressionManager.instance.AddPermit (startPermit);
 
-			if (finalBuild) {
-				menuPanel.Activate ();
+		if (finalBuild) {
+			menuPanel.Activate ();
 
-				Time.timeScale = 0f;
-				noBuildObject.SetActive (false);
-				SceneManager.LoadSceneAsync (1, LoadSceneMode.Additive);
-				SceneManager.sceneLoaded += OnEnvSceneLoaded;
-			}
-			else {
-				gameIsRunning = true;
-			}
+			Time.timeScale = 0f;
+			noBuildObject.SetActive (false);
+			SceneManager.LoadSceneAsync (1, LoadSceneMode.Additive);
+			SceneManager.sceneLoaded += OnEnvSceneLoaded;
 		}
 		else {
 			gameIsRunning = true;
@@ -105,9 +93,7 @@ public class GameManager : MonoBehaviour {
 	}
 
 	public void StartPlaying(){
-		if (onGameStarted != null) {
-			onGameStarted ();
-		}
+		StartNextSeason (1);
 
 		Time.timeScale = 1f;
 		gameIsRunning = true;	
@@ -191,12 +177,26 @@ public class GameManager : MonoBehaviour {
 
 	public void StartNextSeason(int season){
 		gameText.enabled = true;
+		gameIsRunning = true;
 
 		gameText.text = "Season " + season.ToString() + " begins!";
-		endGameCounter.onCount += DisableGameText;
+		endGameCounter.onCount += StartEndGameCounter;
 		endGameCounter.StartCounter (3f);
 		EnableBoatControls ();
-		Start ();
+
+		if (onSeasonStarted != null) {
+			onSeasonStarted ();
+		}
+	}
+
+	void StartEndGameCounter(){
+		endGameCounter.StopCounter ();
+		endGameCounter.onCount -= StartEndGameCounter;
+		gameText.enabled = false;
+		gameText.text = showBigTextDuration.ToString () + endWarning;
+
+		endGameCounter.onCount += ShowEndGameText;
+		endGameCounter.StartCounter (mainGameDurationInSecs - 3f);		
 	}
 
 	public void ShowGameCompletion(){
@@ -204,11 +204,6 @@ public class GameManager : MonoBehaviour {
 
 		gameText.text = "You completed the game!";
 		gameIsRunning = false;
-	}
-
-	void DisableGameText(){
-		endGameCounter.onCount -= DisableGameText;
-		gameText.enabled = false;
 	}
 
 	public void Restart(){

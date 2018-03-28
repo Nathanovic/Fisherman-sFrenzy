@@ -32,6 +32,8 @@ public class ProgressionManager : MonoBehaviour {
 	private FishPoolInfo[] info;
 	private int exterminatedCount;
 
+	private bool levelEndInfoActive = false;
+
 	void Awake(){
 		instance = this;
 		PrepareNextSeason ();
@@ -83,6 +85,7 @@ public class ProgressionManager : MonoBehaviour {
 	}
 
 	public void ShowResults(){
+		levelEndInfoActive = true;
 		string dockFeedback = "feedback";
 		int maxValidExtCount = Mathf.FloorToInt ((float)permitCount / 2f);
 		if (exterminatedCount > maxValidExtCount) {
@@ -146,13 +149,17 @@ public class ProgressionManager : MonoBehaviour {
 	}
 
 	//button event: 
-	public void TryLoadNextSeason(){
+	public void HidePreviousSeasonInfo (){
+		levelInfoScript.DeactivateEndPanel ();
 		PrepareNextSeason ();
-		levelInfoScript.DeactivateEndPanel();
+		canvasScript.ShowLevelInfo (TryLoadNextSeason);
+	}
+
+	//callback after level demand has been shown
+	private void TryLoadNextSeason(){
 		if (currentSeason == seasonDemands.Length) {
 			GameManager.instance.ShowGameCompletion ();
-		}
-		else{
+		} else {
 			GameManager.instance.StartNextSeason (currentSeason);				
 		}
 	}

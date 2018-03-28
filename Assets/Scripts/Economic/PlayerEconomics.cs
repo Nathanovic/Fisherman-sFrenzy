@@ -23,6 +23,12 @@ public class PlayerEconomics : MonoBehaviour {
 		fishingScript.onNetUp += AddFish;
 		defaultColor = storageText.color;
 		UpdateStorageFillness ();
+
+		GameManager.instance.onSeasonStarted += ResetScore;
+	}
+
+	void ResetScore(){
+		totalValueHolder.Reset ();
 	}
 
 	void Update(){
@@ -90,7 +96,7 @@ public class PlayerEconomics : MonoBehaviour {
 	}
 
 	void UpdateStorageFillness(){
-		float fillAmount = fishValueHolder.GetValue () / statScript.storageSize;
+		float fillAmount = (float)totalValueHolder.GetValue () / statScript.storageSize;
 		storageFill.fillAmount = fillAmount;
 		storageText.color = fillAmount == 1f ? warningColor : defaultColor;
 	}
@@ -103,6 +109,13 @@ public class PlayerEconomics : MonoBehaviour {
 
 		public int GetValue(){
 			return myValue;
+		}
+
+		public void Reset(){
+			myValue = 0;
+			if (onValueChanged != null) {
+				onValueChanged (myValue);
+			}
 		}
 
 		public void AddValue(int addValue){

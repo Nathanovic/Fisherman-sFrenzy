@@ -19,7 +19,7 @@ public class VirtualJoystick : MonoBehaviour {
 	public float maxInputTouchDist = 90f;
 
 	private bool draggingJoystick = false;
-	private bool joystickActive = true;
+	private bool joystickActive = false;
 
 	private void Start(){
 		background = GetComponent<RectTransform> ();
@@ -125,7 +125,7 @@ public class VirtualJoystick : MonoBehaviour {
 	private void EnableCVG(){
 		cvg.Activate ();
 		disableCounter.StopCounter ();
-		DragPointer ();		
+		//DragPointer ();		
 	}
 
 	private void BoatControlsDisabled(){

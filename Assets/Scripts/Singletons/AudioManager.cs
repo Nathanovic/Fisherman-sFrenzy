@@ -22,7 +22,7 @@ public class AudioManager : MonoBehaviour {
 
 	void Start(){
 		ProgressionManager.instance.onGameOver += FadeToSadMusic;
-		GameManager.instance.onGameStarted += OnGameStarted;
+		GameManager.instance.onSeasonStarted += OnSeasonStarted;
 		currentMusic = cheerfulMusic;
 		StartCoroutine (PlayMainMusic ());
 	}
@@ -49,7 +49,7 @@ public class AudioManager : MonoBehaviour {
 		StartCoroutine (FadeMusic (sadMusic, fadeDuration));
 	}
 
-	void OnGameStarted(){
+	void OnSeasonStarted(){
 		if (!gameRunning) {
 			gameRunning = true;
 			musicSource.loop = false;
