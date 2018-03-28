@@ -22,7 +22,7 @@ public class ProgressionManager : MonoBehaviour {
 	public LevelInfoDisplayer levelInfoScript;
 	public SeasonDemand[] seasonDemands;
 	public int currentSeason = 0;
-	private int seasonDemandAmount;
+	public int seasonDemandAmount{ get; private set; }
 
 	[Range(0f, 1f)][SerializeField]private float poolEndangeredPercentage;
 

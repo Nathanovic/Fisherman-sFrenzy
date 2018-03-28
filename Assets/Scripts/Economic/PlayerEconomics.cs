@@ -7,9 +7,6 @@ public class PlayerEconomics : MonoBehaviour {
 	public IntValueHolder totalValueHolder;
 	public IntValueHolder fishValueHolder;
 	public Image storageFill;
-	public Text storageText;
-	private Color defaultColor;
-	public Color warningColor;
 
 	void Awake(){
 		totalValueHolder = new IntValueHolder ();
@@ -21,7 +18,6 @@ public class PlayerEconomics : MonoBehaviour {
 		FishingNet fishingScript = GetComponentInChildren<FishingNet> ();
 
 		fishingScript.onNetUp += AddFish;
-		defaultColor = storageText.color;
 		UpdateStorageFillness ();
 
 		GameManager.instance.onSeasonStarted += ResetScore;
@@ -96,9 +92,8 @@ public class PlayerEconomics : MonoBehaviour {
 	}
 
 	void UpdateStorageFillness(){
-		float fillAmount = (float)totalValueHolder.GetValue () / statScript.storageSize;
+		float fillAmount = (float)fishValueHolder.GetValue () / statScript.storageSize;
 		storageFill.fillAmount = fillAmount;
-		storageText.color = fillAmount == 1f ? warningColor : defaultColor;
 	}
 
 	public class IntValueHolder{

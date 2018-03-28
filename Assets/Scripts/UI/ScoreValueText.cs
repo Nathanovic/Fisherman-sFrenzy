@@ -10,11 +10,11 @@ public class ScoreValueText : MonoBehaviour {
 		myText = GetComponent<Text> ();
 
 		playerEcoScript.totalValueHolder.onValueChanged += ScoreValueChanged;
-		int fishValue = playerEcoScript.fishValueHolder.GetValue ();
+		int fishValue = playerEcoScript.totalValueHolder.GetValue ();
 		ScoreValueChanged (fishValue);
 	}
 
 	void ScoreValueChanged(int newValue){
-		myText.text = "Score: " + newValue.ToString ();
+		myText.text = newValue.ToString () + "/" + ProgressionManager.instance.seasonDemandAmount.ToString();
 	}
 }
