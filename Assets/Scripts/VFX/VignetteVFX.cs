@@ -13,18 +13,17 @@ public class VignetteVFX : MonoBehaviour {
 	//this IENumerator is called by derived classes to start fading
 	protected IEnumerator FadeVignette(float fadeStrength){
 		float maxA = Mathf.Min (maxAlpha, maxAlpha * fadeStrength * valueMultiplier);
-		yield return StartCoroutine(FadeVignette (0f, maxA, fadeTime)); 
+		yield return StartCoroutine(FadeVignette (0f, maxA)); 
 		yield return new WaitForSeconds (stayInTime);
-		yield return StartCoroutine(FadeVignette (maxA, 0f, fadeTime)); 
+		yield return StartCoroutine(FadeVignette (maxA, 0f)); 
 	}
 
-	IEnumerator FadeVignette(float startA, float endA, float duration){
+	protected IEnumerator FadeVignette(float startA, float endA){
 		float t = 0f;
 		Color c = vignetteMat.GetColor(colorProperty);
 		c.a = startA;
-		vignetteMat.color = c;
 		while (t < 1f) {
-			t += Time.deltaTime / duration;
+			t += Time.deltaTime / fadeTime;
 			c.a = Mathf.Lerp (startA, endA, t);
 			vignetteMat.SetColor(colorProperty, c);
 			yield return null;

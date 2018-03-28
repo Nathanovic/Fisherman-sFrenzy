@@ -15,9 +15,10 @@ public class FishHealthInfo : MonoBehaviour {
 	public float yOffset = 3f;
 
 	[Range(0f,1f)]public float dangerHealthPercentage = 0.5f;
-	public Color safeHealthColor;
-	public Color dangerHealthColor;
-	public Color noRepopHealthColor;
+	public Sprite safeHealthImg;
+	public Sprite dangerHealthImg;
+	public Sprite noRepopHealthImg;
+	public Sprite exterminatedImg;
 
 	void Start () {
 		camTransform = Camera.main.transform;
@@ -61,15 +62,17 @@ public class FishHealthInfo : MonoBehaviour {
 	}
 
 	void SetHealthColor(){
-		Color healthColor = safeHealthColor;
+		Sprite healthImg = safeHealthImg;
 		int fishCount = poolScript.RemainingFishCount ();
 		float healthPercent = (float)fishCount / poolScript.maxFishAmount;
 
-		if (fishCount < poolScript.minFishAmount)
-			healthColor = noRepopHealthColor;
+		if (fishCount == 0)
+			healthImg = exterminatedImg;
+		else if (fishCount < poolScript.minFishAmount)
+			healthImg = noRepopHealthImg;
 		else if (ProgressionManager.instance.FishPoolEndangered(poolScript))
-			healthColor = dangerHealthColor;
+			healthImg = dangerHealthImg;
 
-		image.color = healthColor;
+		image.sprite = healthImg;
 	}
 }

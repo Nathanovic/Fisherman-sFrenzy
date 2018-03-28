@@ -2,7 +2,7 @@
 using UnityEngine;
 
 //agent data voor vis, wordt gebruikt door de states om de state te checken
-public class FishModel : MonoBehaviour {
+ public class FishModel : MonoBehaviour {
 
 	public FishPool myPool;
 	public Vector3 position;
@@ -30,7 +30,7 @@ public class FishModel : MonoBehaviour {
 	}
 
 	public void Escape(FishPool alternativePool = null){	
-		if (alternativePool != null && alternativePool.specie == specie) {
+		if (alternativePool != null) {
 			myPool = alternativePool;
 		}
 

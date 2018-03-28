@@ -14,6 +14,8 @@ public class EndangeredFish : MonoBehaviour {
 	private int currentWaypointIndex;
 	[SerializeField]private float waypointReachedDeltaDist;
 
+	private bool caught = false;
+
 	private void Start () {
 		//prepare our waypoints:
 		List<Transform> waypointChildren = waypointHolder.GetComponentsInChildren<Transform> ().ToList();
@@ -29,6 +31,9 @@ public class EndangeredFish : MonoBehaviour {
 	}
 
 	private void Update () {
+		if (caught)
+			return;
+
 		Quaternion targetRot = Quaternion.LookRotation (currentWaypoint - transform.position);
 		transform.rotation = Quaternion.RotateTowards (transform.rotation, targetRot, rotationSpeed * Time.deltaTime);
 
@@ -43,5 +48,22 @@ public class EndangeredFish : MonoBehaviour {
 		currentWaypointIndex++;
 		currentWaypointIndex = (currentWaypointIndex == waypoints.Length) ? 0 : currentWaypointIndex;
 		currentWaypoint = waypoints [currentWaypointIndex];
+	}
+
+	public void AttachToNet(){
+		caught = true;
+	}
+
+	public void Escape(){
+		caught = false;
+	}
+
+	public void Kill(){
+		Destroy (gameObject);
+	}
+
+	void OnDrawGizmos(){
+		Gizmos.color = Color.grey;
+		Gizmos.DrawLine (transform.position, currentWaypoint);
 	}
 }

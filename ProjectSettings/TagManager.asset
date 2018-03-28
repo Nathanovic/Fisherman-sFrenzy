@@ -9,6 +9,7 @@ TagManager:
   - Obstacle
   - Sonar
   - FishPool
+  - Shark
   layers:
   - Default
   - TransparentFX

@@ -128,7 +128,7 @@ public class Fish : MonoBehaviour {
 	}
 
 	public Vector3 GoalSteering(){
-		Vector3 vec = transform.parent.position - transform.position;
+		Vector3 vec = myPool.transform.position - transform.position;
 		Debug.DrawRay (transform.position, vec);
 		return vec.normalized * conf.seekTargetPriority;
 	}
