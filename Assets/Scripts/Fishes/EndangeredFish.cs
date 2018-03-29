@@ -11,7 +11,7 @@ public class EndangeredFish : MonoBehaviour {
 	[SerializeField]private Transform waypointHolder;
 	private Vector3[] waypoints;
 	private Vector3 currentWaypoint;
-	private int currentWaypointIndex;
+	[SerializeField]private int currentWaypointIndex;
 	[SerializeField]private float waypointReachedDeltaDist;
 
 	private bool caught = false;
@@ -27,7 +27,7 @@ public class EndangeredFish : MonoBehaviour {
 			waypoints [i] = waypointChildren [i].position;
 		}
 			
-		currentWaypoint = waypoints [0];
+		currentWaypoint = waypoints [currentWaypointIndex];
 	}
 
 	private void Update () {

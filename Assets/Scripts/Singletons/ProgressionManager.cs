@@ -157,7 +157,7 @@ public class ProgressionManager : MonoBehaviour {
 
 	//callback after level demand has been shown
 	private void TryLoadNextSeason(){
-		if (currentSeason == seasonDemands.Length) {
+		if (currentSeason > seasonDemands.Length) {
 			GameManager.instance.ShowGameCompletion ();
 		} else {
 			GameManager.instance.StartNextSeason (currentSeason);				
