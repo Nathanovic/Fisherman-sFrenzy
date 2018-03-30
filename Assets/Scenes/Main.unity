@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 0}
-  m_IndirectSpecularColor: {r: 0, g: 0, b: 0, a: 1}
+  m_IndirectSpecularColor: {r: 0.45012462, g: 0.5001667, b: 0.5754502, a: 1}
 --- !u!157 &3
 LightmapSettings:
   m_ObjectHideFlags: 0
@@ -11973,7 +11973,7 @@ MonoBehaviour:
   - upgradeTitle: 'Storage #4'
     stat: 0
     fishCost: 13
-    upgradeValue: 8
+    upgradeValue: 10
     linkedPermit: {fileID: 0}
   - upgradeTitle: 'Storage #5'
     stat: 0
@@ -27125,6 +27125,26 @@ Prefab:
     - target: {fileID: 1658426205207512, guid: 467782f68e1654b4d945a51bca75f3e2, type: 2}
       propertyPath: m_Name
       value: FishFeedback
+      objectReference: {fileID: 0}
+    - target: {fileID: 198123328582506950, guid: 467782f68e1654b4d945a51bca75f3e2,
+        type: 2}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minScalar
+      value: 30.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198123328582506950, guid: 467782f68e1654b4d945a51bca75f3e2,
+        type: 2}
+      propertyPath: EmissionModule.m_Bursts.Array.data[1].countCurve.minScalar
+      value: 30.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198123328582506950, guid: 467782f68e1654b4d945a51bca75f3e2,
+        type: 2}
+      propertyPath: EmissionModule.m_Bursts.Array.data[0].countCurve.minScalar
+      value: 30.0000
+      objectReference: {fileID: 0}
+    - target: {fileID: 198123328582506950, guid: 467782f68e1654b4d945a51bca75f3e2,
+        type: 2}
+      propertyPath: EmissionModule.m_Bursts.Array.data[1].countCurve.minScalar
+      value: 30.0000
       objectReference: {fileID: 0}
     - target: {fileID: 198123328582506950, guid: 467782f68e1654b4d945a51bca75f3e2,
         type: 2}
